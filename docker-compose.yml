@@ -111,6 +111,7 @@ services:
           - INSTALL_POWERLINE=${WORKSPACE_INSTALL_POWERLINE}
       volumes:
         - ${APP_CODE_PATH_HOST}:${APP_CODE_PATH_CONTAINER}${APP_CODE_CONTAINER_FLAG}
+        - ./php-fpm/cli.ini:/etc/php/${PHP_VERSION}/cli/conf.d/30-cli.ini
       extra_hosts:
         - "dockerhost:${DOCKER_HOST_IP}"
       ports:
@@ -170,6 +171,7 @@ services:
       volumes:
         - ./php-fpm/php${PHP_VERSION}.ini:/usr/local/etc/php/php.ini
         - ${APP_CODE_PATH_HOST}:${APP_CODE_PATH_CONTAINER}${APP_CODE_CONTAINER_FLAG}
+        - ./php-fpm/cli.ini:/etc/php/${PHP_VERSION}/cli/conf.d/30-cli.ini
       expose:
         - "9000"
       extra_hosts:
@@ -206,6 +208,7 @@ services:
       volumes:
         - ${APP_CODE_PATH_HOST}:${APP_CODE_PATH_CONTAINER}${APP_CODE_CONTAINER_FLAG}
         - ./php-worker/supervisord.d:/etc/supervisord.d
+        - ./php-fpm/cli.ini:/etc/php/${PHP_VERSION}/cli/conf.d/30-cli.ini
       depends_on:
         - workspace
       extra_hosts:
@@ -1418,6 +1421,6 @@ services:
       ports:
         - "${MANTICORE_API_PORT}:9312"
         - "${MANTICORE_SPHINXQL_PORT}:9306"
-        - "${MANTICORE_HTTP_PORT}:9308"        
+        - "${MANTICORE_HTTP_PORT}:9308"
       networks:
         - backend
